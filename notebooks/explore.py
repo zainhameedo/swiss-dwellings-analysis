@@ -14,7 +14,7 @@ def _():
     # scripts/ holds the shared helpers
     ROOT = Path(__file__).resolve().parent.parent
     sys.path.append(str(ROOT / "scripts"))
-    return ROOT, mo, sys
+    return (mo,)
 
 
 @app.cell
@@ -25,36 +25,36 @@ def _():
     import swissdwellings as sd
 
     con = sd.connect()
-    return con, pd, plt, sd
+    return con, plt, sd
 
 
 @app.cell
 def _(mo):
-    mo.md(
-        """
-        # Swiss Dwellings
+    mo.md("""
+    # Swiss Dwellings
 
-        42,207 apartments / 242,257 areas / 3,093 buildings across 1,419 Swiss sites.
+    42,207 apartments / 242,257 areas / 3,093 buildings across 1,419 Swiss sites.
 
-        Two tables are registered on the duckdb connection `con`:
+    Two tables are registered on the duckdb connection `con`:
 
-        | view | rows | grain |
-        |---|---|---|
-        | `geo` | 2,501,540 | one row per geometry (area, separator, opening, feature) |
-        | `sim` | 347,583 | one row per **(floor_id, area_id)**, 367 columns |
+    | view | rows | grain |
+    |---|---|---|
+    | `geo` | 2,501,540 | one row per geometry (area, separator, opening, feature) |
+    | `sim` | 347,583 | one row per **(floor_id, area_id)**, 367 columns |
 
-        **Grain warning.** `area_id` is *not* unique. A plan is drawn once and reused
-        across identical floors, so the same `area_id` recurs within a site (up to 15x)
-        with identical geometry but different simulation results per floor.
-        Always join on `(floor_id, area_id)`.
-        """
-    )
+    **Grain warning.** `area_id` is *not* unique. A plan is drawn once and reused
+    across identical floors, so the same `area_id` recurs within a site (up to 15x)
+    with identical geometry but different simulation results per floor.
+    Always join on `(floor_id, area_id)`.
+    """)
     return
 
 
 @app.cell
 def _(mo):
-    mo.md("""## Schema""")
+    mo.md("""
+    ## Schema
+    """)
     return
 
 
@@ -86,14 +86,12 @@ def _(con, family_picker, sd):
 
 @app.cell
 def _(mo):
-    mo.md(
-        """
-        ## Floor plan viewer
+    mo.md("""
+    ## Floor plan viewer
 
-        Pick a floor and a metric. `color_by=None` falls back to colouring each
-        area by its room type.
-        """
-    )
+    Pick a floor and a metric. `color_by=None` falls back to colouring each
+    area by its room type.
+    """)
     return
 
 
@@ -168,21 +166,19 @@ def _(cmap_picker, con, floor_picker, labels_toggle, metric_picker, plt, sd):
 
 @app.cell
 def _(mo):
-    mo.md(
-        """
-        ## Scratch
+    mo.md("""
+    ## Scratch
 
-        `con` is a duckdb connection, `sd` the helper module. Useful entry points:
+    `con` is a duckdb connection, `sd` the helper module. Useful entry points:
 
-        - `sd.sim_columns(con, family)` / `sd.metric_bases(con, family)`
-        - `sd.join_sim_geo(con, cols, where=...)` - joins on the correct grain
-        - `sd.to_gdf(df)` - WKT column -> GeoDataFrame
-        - `sd.floor_geometries(con, floor_id)` / `sd.floor_plan_with_metric(con, floor_id, metric)`
-        - `sd.plot_floor(gdf, color_by=...)`
+    - `sd.sim_columns(con, family)` / `sd.metric_bases(con, family)`
+    - `sd.join_sim_geo(con, cols, where=...)` - joins on the correct grain
+    - `sd.to_gdf(df)` - WKT column -> GeoDataFrame
+    - `sd.floor_geometries(con, floor_id)` / `sd.floor_plan_with_metric(con, floor_id, metric)`
+    - `sd.plot_floor(gdf, color_by=...)`
 
-        Aggregate in duckdb, pull only what you plot into pandas.
-        """
-    )
+    Aggregate in duckdb, pull only what you plot into pandas.
+    """)
     return
 
 
