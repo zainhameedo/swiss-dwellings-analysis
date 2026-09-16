@@ -1,0 +1,8 @@
+# Raw + derived data: 2.9 GB, re-downloadable from Zenodo record 7070952
+data/raw/
+data/interim/
+
+__pycache__/
+*.pyc
+notebooks/__marimo__/
+.ipynb_checkpoints/
