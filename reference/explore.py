@@ -11,9 +11,8 @@ def _():
 
     import marimo as mo
 
-    # scripts/ holds the shared helpers
-    ROOT = Path(__file__).resolve().parent.parent
-    sys.path.append(str(ROOT / "scripts"))
+    # swissdwellings.py sits alongside this file in reference/
+    sys.path.append(str(Path(__file__).resolve().parent))
     return (mo,)
 
 

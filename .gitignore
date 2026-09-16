@@ -1,8 +1,9 @@
-# Raw + derived data: 2.9 GB, re-downloadable from Zenodo record 7070952
-data/raw/
-data/interim/
+# Data: ~2.7 GB of CSV / 673 MB of parquet, re-downloadable from Zenodo
+data/
+
+# marimo session state
+__marimo__/
 
 __pycache__/
 *.pyc
-notebooks/__marimo__/
 .ipynb_checkpoints/
